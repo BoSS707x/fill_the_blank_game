@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          FillTheBlankGame()),
+                          FillTheBlankGame(registeredUsername: '',)),
                 ),
                 child: Container(
                   decoration: BoxDecoration(

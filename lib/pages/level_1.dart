@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:fill_the_blank_game/pages/end_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'timer_ended_page.dart';
 
@@ -11,11 +12,14 @@ class Level {
   String answer;
   String imagePath;
 
-  Level(
-      {required this.question, required this.answer, required this.imagePath});
+  Level({required this.question, required this.answer, required this.imagePath});
 }
 
 class FillTheBlankWidget extends StatefulWidget {
+  final String registeredUsername;
+
+  FillTheBlankWidget({required this.registeredUsername});
+
   @override
   _FillTheBlankWidgetState createState() => _FillTheBlankWidgetState();
 }
@@ -23,9 +27,10 @@ class FillTheBlankWidget extends StatefulWidget {
 class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
   int currentLevel = 0;
   int score = 0;
-  int timeLeft = 9; // Time in seconds (3 minutes)
+  int timeLeft = 200; // Time in seconds (3 minutes)
   Timer? timer;
   Set<String> pressedLetters = Set<String>();
+  String currentUsername = "";
 
   List<Level> levels = [
     Level(
@@ -53,6 +58,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
   @override
   void initState() {
     super.initState();
+    getCurrentUsername();
     timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         if (timeLeft > 0) {
@@ -75,6 +81,15 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
   void dispose() {
     timer?.cancel();
     super.dispose();
+  }
+
+  void getCurrentUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedUsername = prefs.getString('username');
+
+    setState(() {
+      currentUsername = savedUsername ?? "";
+    });
   }
 
   void checkAnswer() {
@@ -119,15 +134,38 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              'Fill the Blank Game Level ${currentLevel + 1}',
+            Row(
+              children: [
+                Text(
+                  'User: $currentUsername',  // Use currentUsername here
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'Score: $score',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.yellowAccent, // Set the color to yellow
-              ),
+            Row(
+              children: [
+                Text(
+                  'Level ${currentLevel + 1}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  'Score: $score',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.yellowAccent,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -136,16 +174,16 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       body: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 // Replace custom painters with Image.asset
                 Image.asset(
-                  levels[currentLevel]
-                      .imagePath, // Replace with your image file path
-                  width: 200,
-                  height: 200,
+                  levels[currentLevel].imagePath,
+                  
+                  width: 550,
+                  height: 270,
                 ),
                 SizedBox(height: 5.0),
                 Text(
@@ -185,8 +223,8 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                 buildAnswerCubes(),
                 SizedBox(height: 3.0),
                 buildKeyboard(),
-                SizedBox(height: 2.0),
-                Text(''),
+                SizedBox(height: 5.0),
+                //Text(''),
               ],
             ),
           ),
@@ -205,9 +243,10 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                 child: Text(
                   'Time Left: ${timeLeft}s',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),
@@ -284,6 +323,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       ));
     }
     return Row(
+      
       mainAxisAlignment: MainAxisAlignment.center,
       children: cubes,
     );
@@ -291,6 +331,10 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
 }
 
 class FillTheBlankGame extends StatelessWidget {
+  final String registeredUsername;
+
+  FillTheBlankGame({required this.registeredUsername});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -298,12 +342,8 @@ class FillTheBlankGame extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: FillTheBlankWidget(),
+      home: FillTheBlankWidget(registeredUsername: registeredUsername),
       debugShowCheckedModeBanner: false,
     );
   }
-}
-
-void main() {
-  runApp(FillTheBlankGame());
 }

@@ -1,6 +1,6 @@
-
-
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, depend_on_referenced_packages, use_key_in_widget_constructors, use_build_context_synchronously
+
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +15,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _passwordController = TextEditingController();
 
   void _register() async {
+    // Clear all registered users
+    await clearAllRegisteredUsers();
+
     // Store username and password in SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', _usernameController.text);
@@ -85,5 +88,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       ),
     );
+  }
+}
+
+// Function to clear all registered users in SharedPreferences
+Future<void> clearAllRegisteredUsers() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  Set<String> keys = prefs.getKeys();
+  List<String> userKeys = keys.where((key) => key.startsWith('user_')).toList();
+  
+
+  for (String key in userKeys) {
+    prefs.remove(key);
   }
 }
