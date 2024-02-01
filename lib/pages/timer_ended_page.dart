@@ -1,11 +1,10 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, sort_child_properties_last, deprecated_member_use, sized_box_for_whitespace
 
+import 'package:fill_the_blank_game/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'home_page.dart';
-
-class EndPage extends StatelessWidget {
+class TimerEndedPage extends StatelessWidget {
   final int score;
   final int timeLeft;
 
@@ -13,7 +12,7 @@ class EndPage extends StatelessWidget {
     SystemNavigator.pop();
   }
 
-  EndPage({required this.score, required this.timeLeft});
+  TimerEndedPage({required this.score, required this.timeLeft});
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +27,10 @@ class EndPage extends StatelessWidget {
           children: [
             SizedBox(height: 100),
             Text(
-              'Game Over!',
+              'You Ran Out Of Time!',
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 150),
             Text(
               'Your Score: $score',
               style: TextStyle(fontSize: 24),
@@ -39,16 +38,11 @@ class EndPage extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               'Time Left: $timeLeft seconds',
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            ),
-            SizedBox(height: 40),
-            Text(
-              'Thank you for playing our game!',
               style: TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 140),
+            
+            SizedBox(height: 160),
+
             Container(
               width: 400,
               height: 75,
@@ -76,6 +70,7 @@ class EndPage extends StatelessWidget {
                 ),
               ),
             ),
+
             Container(
               width: 400,
               height: 75,

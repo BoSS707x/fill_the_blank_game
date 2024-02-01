@@ -4,161 +4,15 @@ import 'dart:async';
 import 'package:fill_the_blank_game/pages/end_page.dart';
 import 'package:flutter/material.dart';
 
+import 'timer_ended_page.dart';
+
 class Level {
   String question;
   String answer;
-  CustomPainter painter;
+  String imagePath;
 
-  Level({required this.question, required this.answer, required this.painter});
-}
-
-class EiffelTowerPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..color = Colors.brown
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
-
-    canvas.drawRect(
-      Rect.fromLTWH(size.width * 0.3, size.height * 0.7, size.width * 0.4,
-          size.height * 0.05),
-      paint,
-    );
-
-    canvas.drawLine(
-      Offset(size.width * 0.3, size.height * 0.7),
-      Offset(size.width * 0.45, size.height * 0.5),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(size.width * 0.7, size.height * 0.7),
-      Offset(size.width * 0.55, size.height * 0.5),
-      paint,
-    );
-
-    canvas.drawLine(
-      Offset(size.width * 0.45, size.height * 0.5),
-      Offset(size.width * 0.5, size.height * 0.3),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(size.width * 0.55, size.height * 0.5),
-      Offset(size.width * 0.5, size.height * 0.3),
-      paint,
-    );
-
-    canvas.drawLine(
-      Offset(size.width * 0.5, size.height * 0.3),
-      Offset(size.width * 0.5, 0),
-      paint,
-    );
-
-    double middleHeight = size.height * 0.5;
-    double step = size.height * 0.1;
-    for (double i = middleHeight; i < size.height * 0.7; i += step) {
-      canvas.drawLine(
-        Offset(size.width * 0.3, i),
-        Offset(size.width * 0.7, i),
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
-
-class numbera extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-
-    double scaleFactor = 1.4;
-
-    var paint = Paint()
-      ..color = Colors.brown
-      ..strokeWidth =
-          2 * scaleFactor 
-      ..style = PaintingStyle.stroke;
-
-    canvas.drawOval(
-      Rect.fromCenter(
-        center: Offset(size.width * 0.5, size.height * 0.4),
-        width: size.width * 0.4 * scaleFactor,
-        height: size.height * 0.3 * scaleFactor,
-      ),
-      paint,
-    );
-
-    canvas.drawOval(
-      Rect.fromCenter(
-        center: Offset(size.width * 0.5, size.height * 0.6),
-        width: size.width * 0.4 * scaleFactor,
-        height: size.height * 0.3 * scaleFactor,
-      ),
-      paint,
-    );
-
-    canvas.drawLine(
-      Offset(size.width * 0.5, size.height * 0.2 * scaleFactor),
-      Offset(size.width * 0.5, size.height * 0.8 * scaleFactor),
-      paint,
-    );
-
-    canvas.drawLine(
-      Offset(size.width * 0.3 * scaleFactor, size.height * 0.5),
-      Offset(size.width * 0.7 * scaleFactor, size.height * 0.5),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
-
-class GenericPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-
-    var backgroundPaint = Paint()..color = Colors.blue;
-    canvas.drawRect(
-        Rect.fromLTWH(0, 0, size.width, size.height), backgroundPaint);
-
-    var bodyPaint = Paint()..color = Colors.brown;
-    Rect bodyRect = Rect.fromPoints(
-        Offset(size.width / 2 - 40, size.height / 2 + 20),
-        Offset(size.width / 2 + 40, size.height / 2 + 100));
-    canvas.drawRRect(
-        RRect.fromRectAndRadius(bodyRect, Radius.circular(20)), bodyPaint);
-
-    var headPaint = Paint()..color = Colors.brown;
-    canvas.drawCircle(
-        Offset(size.width / 2, size.height / 2 - 40), 40.0, headPaint);
-
-    var eyePaint = Paint()..color = Colors.white;
-    canvas.drawCircle(
-        Offset(size.width / 2 - 20, size.height / 2 - 55), 10.0, eyePaint);
-    canvas.drawCircle(
-        Offset(size.width / 2 + 20, size.height / 2 - 55), 10.0, eyePaint);
-
-    var nosePaint = Paint()..color = Colors.black;
-    canvas.drawCircle(
-        Offset(size.width / 2, size.height / 2 - 25), 5.0, nosePaint);
-
-    var mouthPaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
-
-    var mouthPath = Path();
-    mouthPath.moveTo(size.width / 2 - 10, size.height / 2 - 15);
-    mouthPath.quadraticBezierTo(size.width / 2, size.height / 2,
-        size.width / 2 + 10, size.height / 2 - 15);
-    canvas.drawPath(mouthPath, mouthPaint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
+  Level(
+      {required this.question, required this.answer, required this.imagePath});
 }
 
 class FillTheBlankWidget extends StatefulWidget {
@@ -169,24 +23,28 @@ class FillTheBlankWidget extends StatefulWidget {
 class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
   int currentLevel = 0;
   int score = 0;
-  int timeLeft = 180; 
+  int timeLeft = 9; // Time in seconds (3 minutes)
   Timer? timer;
   Set<String> pressedLetters = Set<String>();
 
   List<Level> levels = [
     Level(
-        question: "The capital of France is ___",
-        answer: "paris",
-        painter: EiffelTowerPainter()),
+      question: "The capital of France is ___",
+      answer: "p",
+      imagePath: "lib/images/cat.jpg",
+    ),
 
-    Level(
-        question: "The color of the sky is ___",
-        answer: "blue",
-        painter: GenericPainter()),
-    Level(
-        question: "shape with three angles ___",
-        answer: "triangle",
-        painter: numbera()),
+    // Level(
+    //     question: "The color of the sky is ___",
+    //     answer: "blue",
+    //     imagePath: "lib/images/dog.jpg",
+    // ),
+    // Level(
+    //     question: "Shape with three angles ___",
+    //     answer: "triangle",
+    //     imagePath: "lib/images/cat.jpg",
+    // ),
+    // Add more levels here
   ];
 
   TextEditingController answerController = TextEditingController();
@@ -201,6 +59,13 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           timeLeft--;
         } else {
           t.cancel();
+          // Navigate to EndPage when time runs out
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TimerEndedPage(score: score, timeLeft: 0),
+            ),
+          );
         }
       });
     });
@@ -221,11 +86,14 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         if (currentLevel < levels.length - 1) {
           currentLevel++;
         } else {
-
+          // If it's the last level, navigate to EndPage
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => EndPage(score: score, timeLeft: timeLeft,),
+              builder: (context) => EndPage(
+                score: score,
+                timeLeft: timeLeft,
+              ),
             ),
           );
         }
@@ -234,9 +102,9 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       setState(() {
         feedback = "Incorrect, try again!";
         if (timeLeft > 10) {
-          timeLeft -= 10; 
+          timeLeft -= 10; // Reduce 10 seconds for wrong answer
         } else {
-          timeLeft = 0; 
+          timeLeft = 0; // Prevent negative time
         }
       });
     }
@@ -258,7 +126,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
               'Score: $score',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.yellowAccent, 
+                color: Colors.yellowAccent, // Set the color to yellow
               ),
             ),
           ],
@@ -272,9 +140,12 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CustomPaint(
-                  size: Size(200, 200),
-                  painter: levels[currentLevel].painter,
+                // Replace custom painters with Image.asset
+                Image.asset(
+                  levels[currentLevel]
+                      .imagePath, // Replace with your image file path
+                  width: 200,
+                  height: 200,
                 ),
                 SizedBox(height: 5.0),
                 Text(
@@ -361,13 +232,14 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       );
     }).toList();
 
+    // Add the delete button to the keyboard
     keyboardButtons.add(
       ElevatedButton(
         onPressed: () {
           if (answerController.text.isNotEmpty) {
             setState(() {
-              answerController.text =
-                  answerController.text.substring(0, answerController.text.length - 1);
+              answerController.text = answerController.text
+                  .substring(0, answerController.text.length - 1);
             });
           }
         },
@@ -407,7 +279,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           child: Text(
             answerController.text[i].toUpperCase(),
             style: TextStyle(color: Colors.white, fontSize: 24),
-            
           ),
         ),
       ));
@@ -425,11 +296,14 @@ class FillTheBlankGame extends StatelessWidget {
     return MaterialApp(
       title: 'Fill the Blank Game',
       theme: ThemeData(
-        primarySwatch:
-            Colors.blueGrey, 
+        primarySwatch: Colors.blueGrey,
       ),
       home: FillTheBlankWidget(),
       debugShowCheckedModeBanner: false,
     );
   }
+}
+
+void main() {
+  runApp(FillTheBlankGame());
 }
