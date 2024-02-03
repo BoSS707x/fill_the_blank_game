@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, prefer_const_constructors, sort_child_properties_last, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: unused_local_variable, prefer_const_constructors, sort_child_properties_last, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api, prefer_collection_literals, unnecessary_string_interpolations
 
 import 'dart:async';
 import 'package:fill_the_blank_game/pages/end_page.dart';
@@ -36,29 +36,29 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
 
   List<Level> levels = [
     Level(
-      question: "The capital of France is ___",
-      answer: "p",
-      imagePath: "lib/images/eiffel tower.jpg",
+      question: "The coldest season is ______",
+      answer: "winter",
+      imagePath: "lib/images/winter.jpg",
     ),
     Level(
-      question: "The color of the sky is ___",
-      answer: "b",
-      imagePath: "lib/images/dog.jpg",
+      question: "The opposite of fast is ____",
+      answer: "slow",
+      imagePath: "lib/images/slow.jpg",
     ),
     Level(
-      question: "Shape with three angles ___",
-      answer: "t",
-      imagePath: "lib/images/dog.jpg",
+      question: "The color of the sky is ____",
+      answer: "blue",
+      imagePath: "lib/images/sky.jpg",
     ),
     Level(
-      question: "Shape with three angles ___",
-      answer: "t",
-      imagePath: "lib/images/cat.jpg",
+      question: "The shape of a pizza is ______",
+      answer: "circle",
+      imagePath: "lib/images/pizza.jpg",
     ),
     Level(
-      question: "Shape with three angles ___",
-      answer: "t",
-      imagePath: "lib/images/cat.jpg",
+      question: "Fish live in the ___",
+      answer: "sea",
+      imagePath: "lib/images/fish.jpg",
     ),
     //Add more levels here
   ];
@@ -80,7 +80,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => TimerEndedPage(score: score, timeLeft: 0),
+              builder: (context) => TimerEndedPage(score: score, timeLeft: 0, username: currentUsername,),
             ),
           );
         }
@@ -116,20 +116,14 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       setState(() {
         feedback = "Correct! 🎉";
         score += 10;
-
-
         if (currentLevel < levels.length - 1) {
           currentLevel++;
-          feedback = ""; // Reset feedback message
         } else {
           // If it's the last level, navigate to EndPage
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => EndPage(
-                score: score,
-                timeLeft: timeLeft,
-              ),
+              builder: (context) => EndPage(score: score, timeLeft: timeLeft, username: currentUsername,),
             ),
           );
         }
@@ -138,7 +132,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       setState(() {
         feedback = "Incorrect, try again!";
         if (timeLeft > 10) {
-          timeLeft -= 10; // Reduce 10 seconds for the wrong answer
+          timeLeft -= 10; // Reduce 10 seconds for wrong answer
         } else {
           timeLeft = 0; // Prevent negative time
         }
@@ -166,21 +160,12 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                     builder: (context) => SettingsPage(),
                   ),
                 );
-
-                // Handle the result if needed
-                if (result != null && result is Map<String, dynamic>) {
-                  // Example: Update timer and mute based on result values
-                  int selectedTimer = result['timer'] ?? 0;
-                  bool muteSounds = result['mute'] ?? false;
-
-                  // Implement your logic based on the result
-                }
               },
             ),
             Row(
               children: [
                 Text(
-                  'User: $currentUsername',
+                  '$currentUsername',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -205,7 +190,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                   'Score: $score',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.yellowAccent,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -262,7 +247,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                 ),
                 SizedBox(height: 6.0),
                 buildAnswerCubes(),
-                SizedBox(height: 3.0),
+                SizedBox(height: 12.0),
                 buildKeyboard(),
                 SizedBox(height: 5.0),
               ],
@@ -298,8 +283,8 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
 
   Widget buildKeyboard() {
     final String letters = currentLevel == 0
-        ? 'supddafrhios'
-        : (currentLevel == 1 ? 'kbealrhgufey' : 'ytsrtdianhglje');
+        ? 'rbnutwioahslce'
+        : (currentLevel == 1 ? 'rbnutwioahslce' : 'rbnutwioahslce');
 
     List<Widget> keyboardButtons = letters.split('').map((String letter) {
       return ElevatedButton(
@@ -307,7 +292,17 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           answerController.text += letter;
           setState(() {});
         },
-        child: Text(letter.toUpperCase()),
+        child: Text(
+          letter.toUpperCase(),
+          style: TextStyle(
+            fontSize: 20,
+            //fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.blueGrey,
+        ),
       );
     }).toList();
 
@@ -334,8 +329,8 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       children: <Widget>[
         Expanded(
           child: Wrap(
-            spacing: 11.0,
-            runSpacing: 6,
+            spacing: 10.0,
+            runSpacing: 10,
             children: keyboardButtons,
           ),
         ),
@@ -345,7 +340,9 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
 
   Widget buildAnswerCubes() {
     List<Widget> cubes = [];
-    for (int i = 0; i < answerController.text.length; i++) {
+    String answer = levels[currentLevel].answer;
+
+    for (int i = 0; i < answer.length; i++) {
       cubes.add(Container(
         width: 40,
         height: 40,
@@ -355,12 +352,15 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         ),
         child: Center(
           child: Text(
-            answerController.text[i].toUpperCase(),
-            style: TextStyle(color: Colors.white, fontSize: 24),
+            i < answerController.text.length
+                ? answerController.text[i].toUpperCase()
+                : '', // Show the entered letters
+            style: TextStyle(color: Colors.white, fontSize: 24,),
           ),
         ),
       ));
     }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: cubes,

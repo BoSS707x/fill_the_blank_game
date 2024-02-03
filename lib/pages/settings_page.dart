@@ -1,13 +1,22 @@
 // settings_page.dart
+import 'package:fill_the_blank_game/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatelessWidget {
+
+    void quitApp() {
+    SystemNavigator.pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: Text('Settings'),
+        backgroundColor: Colors.grey[300],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -39,13 +48,17 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Mute Sounds'),
-              onTap: () async {
-                // Update the sound mute status in SharedPreferences
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                bool currentMuteStatus = prefs.getBool('muteSounds') ?? false;
-                await prefs.setBool('muteSounds', !currentMuteStatus);
-              },
+              title: Text('Go Back to Home'),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                ),
+                // Navigate back to the home page
+
+            ),
+            ListTile(
+              title: Text('Quit Game'),
+              onTap: quitApp,
             ),
             // ... other settings
           ],

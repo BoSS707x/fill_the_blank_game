@@ -35,7 +35,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(title: Text('Registration Page')),
+      appBar: AppBar(title: Text('Registration Page'),
+      backgroundColor: Colors.grey[300],
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.grey[300],

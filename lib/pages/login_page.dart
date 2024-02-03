@@ -39,7 +39,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(title: Text('Login Page')),
+      appBar: AppBar(title: Text('Login Page'),
+      backgroundColor: Colors.grey[300],
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.grey[300],

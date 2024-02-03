@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TimerEndedPage extends StatelessWidget {
+  final String username;
   final int score;
   final int timeLeft;
 
@@ -12,25 +13,31 @@ class TimerEndedPage extends StatelessWidget {
     SystemNavigator.pop();
   }
 
-  TimerEndedPage({required this.score, required this.timeLeft});
+  TimerEndedPage({required this.username, required this.score, required this.timeLeft});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text('Game Over'),
+        //waleed  qtitle: Text('Game Over'),
+        backgroundColor: Colors.grey[300],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 100),
+            SizedBox(height: 80),
             Text(
               'You Ran Out Of Time!',
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 150),
+            Text(
+              'User: $username',
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 10),
             Text(
               'Your Score: $score',
               style: TextStyle(fontSize: 24),
@@ -41,7 +48,7 @@ class TimerEndedPage extends StatelessWidget {
               style: TextStyle(fontSize: 24),
             ),
             
-            SizedBox(height: 160),
+            SizedBox(height: 140),
 
             Container(
               width: 400,

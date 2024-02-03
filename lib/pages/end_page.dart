@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'home_page.dart';
 
 class EndPage extends StatelessWidget {
+  final String username;
   final int score;
   final int timeLeft;
 
@@ -13,25 +14,31 @@ class EndPage extends StatelessWidget {
     SystemNavigator.pop();
   }
 
-  EndPage({required this.score, required this.timeLeft});
+  EndPage({required this.username, required this.score, required this.timeLeft});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text('Game Over'),
+        //title: Text('Game Over'),
+        backgroundColor: Colors.grey[300],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 100),
+            SizedBox(height: 80),
             Text(
-              'Game Over!',
+              'You Won! 🎉🎉',
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 80),
+            Text(
+              'User: $username',
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 10),
             Text(
               'Your Score: $score',
               style: TextStyle(fontSize: 24),

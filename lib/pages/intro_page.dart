@@ -19,7 +19,7 @@ class IntroPage extends StatelessWidget {
             ),
             const SizedBox(height: 250,),
             Text(
-              'welcome to',
+              'Welcome to',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
