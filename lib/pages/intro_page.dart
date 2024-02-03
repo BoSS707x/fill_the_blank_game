@@ -47,7 +47,7 @@ class IntroPage extends StatelessWidget {
                 margin: EdgeInsets.all(25),
                 child: Center(
                   child: Text(
-                    'PLAY',
+                    'START',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,

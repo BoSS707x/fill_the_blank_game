@@ -1,14 +1,22 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, use_key_in_widget_constructors
-
+import 'package:fill_the_blank_game/pages/settings_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
 import 'level_1.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key});
 
   void quitApp() {
-    SystemNavigator.pop(); 
+    SystemNavigator.pop();
+  }
+
+  void openSettings(BuildContext context) {
+    // Navigate to the settings page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SettingsPage()),
+      
+    );
   }
 
   @override
@@ -29,6 +37,13 @@ class HomePage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.blueGrey,
           elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () => openSettings(context),
+          ),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -40,8 +55,8 @@ class HomePage extends StatelessWidget {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          FillTheBlankGame(registeredUsername: '',)),
+                    builder: (context) => FillTheBlankGame(registeredUsername: ''),
+                  ),
                 ),
                 child: Container(
                   decoration: BoxDecoration(

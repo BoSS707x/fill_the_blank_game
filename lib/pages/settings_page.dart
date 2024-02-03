@@ -1,0 +1,106 @@
+// settings_page.dart
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SettingsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'General Settings',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ListTile(
+              title: Text('Change Timer'),
+              onTap: () async {
+                int? newTimerDuration = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return TimerDialog();
+                  },
+                );
+
+                if (newTimerDuration != null) {
+                  // Update the timer duration in SharedPreferences
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.setInt('timerDuration', newTimerDuration);
+                }
+              },
+            ),
+            ListTile(
+              title: Text('Mute Sounds'),
+              onTap: () async {
+                // Update the sound mute status in SharedPreferences
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                bool currentMuteStatus = prefs.getBool('muteSounds') ?? false;
+                await prefs.setBool('muteSounds', !currentMuteStatus);
+              },
+            ),
+            // ... other settings
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TimerDialog extends StatefulWidget {
+  @override
+  _TimerDialogState createState() => _TimerDialogState();
+}
+
+class _TimerDialogState extends State<TimerDialog> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: '180');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Change Timer Duration'),
+      content: TextField(
+        controller: _controller,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(labelText: 'Enter Timer Duration (seconds)'),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            int? timerDuration = int.tryParse(_controller.text);
+            if (timerDuration != null && timerDuration > 0) {
+              Navigator.pop(context, timerDuration);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Invalid timer duration. Please enter a positive number.'),
+                ),
+              );
+            }
+          },
+          child: Text('OK'),
+        ),
+      ],
+    );
+  }
+}

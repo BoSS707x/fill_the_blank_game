@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, library_private_types_in_public_api, camel_case_types, use_key_in_widget_constructors, prefer_collection_literals, deprecated_member_use
+// ignore_for_file: unused_local_variable, prefer_const_constructors, sort_child_properties_last, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'dart:async';
 import 'package:fill_the_blank_game/pages/end_page.dart';
+import 'package:fill_the_blank_game/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,7 +13,8 @@ class Level {
   String answer;
   String imagePath;
 
-  Level({required this.question, required this.answer, required this.imagePath});
+  Level(
+      {required this.question, required this.answer, required this.imagePath});
 }
 
 class FillTheBlankWidget extends StatefulWidget {
@@ -27,7 +29,7 @@ class FillTheBlankWidget extends StatefulWidget {
 class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
   int currentLevel = 0;
   int score = 0;
-  int timeLeft = 200; // Time in seconds (3 minutes)
+  int timeLeft = 180;
   Timer? timer;
   Set<String> pressedLetters = Set<String>();
   String currentUsername = "";
@@ -36,20 +38,29 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
     Level(
       question: "The capital of France is ___",
       answer: "p",
+      imagePath: "lib/images/eiffel tower.jpg",
+    ),
+    Level(
+      question: "The color of the sky is ___",
+      answer: "b",
+      imagePath: "lib/images/dog.jpg",
+    ),
+    Level(
+      question: "Shape with three angles ___",
+      answer: "t",
+      imagePath: "lib/images/dog.jpg",
+    ),
+    Level(
+      question: "Shape with three angles ___",
+      answer: "t",
       imagePath: "lib/images/cat.jpg",
     ),
-
-    // Level(
-    //     question: "The color of the sky is ___",
-    //     answer: "blue",
-    //     imagePath: "lib/images/dog.jpg",
-    // ),
-    // Level(
-    //     question: "Shape with three angles ___",
-    //     answer: "triangle",
-    //     imagePath: "lib/images/cat.jpg",
-    // ),
-    // Add more levels here
+    Level(
+      question: "Shape with three angles ___",
+      answer: "t",
+      imagePath: "lib/images/cat.jpg",
+    ),
+    //Add more levels here
   ];
 
   TextEditingController answerController = TextEditingController();
@@ -59,13 +70,13 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
   void initState() {
     super.initState();
     getCurrentUsername();
+    loadTimerDuration();
     timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         if (timeLeft > 0) {
           timeLeft--;
         } else {
           t.cancel();
-          // Navigate to EndPage when time runs out
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -74,6 +85,13 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           );
         }
       });
+    });
+  }
+
+  void loadTimerDuration() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      timeLeft = prefs.getInt('timerDuration') ?? 180;
     });
   }
 
@@ -98,8 +116,11 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       setState(() {
         feedback = "Correct! 🎉";
         score += 10;
+
+
         if (currentLevel < levels.length - 1) {
           currentLevel++;
+          feedback = ""; // Reset feedback message
         } else {
           // If it's the last level, navigate to EndPage
           Navigator.pushReplacement(
@@ -117,7 +138,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       setState(() {
         feedback = "Incorrect, try again!";
         if (timeLeft > 10) {
-          timeLeft -= 10; // Reduce 10 seconds for wrong answer
+          timeLeft -= 10; // Reduce 10 seconds for the wrong answer
         } else {
           timeLeft = 0; // Prevent negative time
         }
@@ -134,10 +155,32 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.settings),
+              color: Colors.white,
+              onPressed: () async {
+                // Navigate to SettingsPage and wait for the result
+                var result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsPage(),
+                  ),
+                );
+
+                // Handle the result if needed
+                if (result != null && result is Map<String, dynamic>) {
+                  // Example: Update timer and mute based on result values
+                  int selectedTimer = result['timer'] ?? 0;
+                  bool muteSounds = result['mute'] ?? false;
+
+                  // Implement your logic based on the result
+                }
+              },
+            ),
             Row(
               children: [
                 Text(
-                  'User: $currentUsername',  // Use currentUsername here
+                  'User: $currentUsername',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -178,10 +221,8 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // Replace custom painters with Image.asset
                 Image.asset(
                   levels[currentLevel].imagePath,
-                  
                   width: 550,
                   height: 270,
                 ),
@@ -224,7 +265,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                 SizedBox(height: 3.0),
                 buildKeyboard(),
                 SizedBox(height: 5.0),
-                //Text(''),
               ],
             ),
           ),
@@ -271,7 +311,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       );
     }).toList();
 
-    // Add the delete button to the keyboard
     keyboardButtons.add(
       ElevatedButton(
         onPressed: () {
@@ -323,7 +362,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       ));
     }
     return Row(
-      
       mainAxisAlignment: MainAxisAlignment.center,
       children: cubes,
     );

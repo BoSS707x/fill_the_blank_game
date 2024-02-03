@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, depend_on_referenced_packages, use_key_in_widget_constructors, use_build_context_synchronously
 
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,7 +47,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Icon(
-                Icons.lock_open,
+                Icons.lock,
                 size: 100,
               ),
               SizedBox(height: 50),
