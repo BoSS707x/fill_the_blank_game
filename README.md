@@ -47,7 +47,7 @@ npm start
 After launching the game, follow the on-screen instructions to select your game mode and difficulty level. Type your answers to fill in the blanks and submit them to see how you did.
 
 ## Contributing
-main contributors were the whole team but some members are 
+
 
 
 
@@ -63,6 +63,7 @@ Fill The Blank Game is released under the [MIT License](LICENSE). See the LICENS
 For support or to report issues, please file an issue on the GitHub issue tracker.
 
 ## Authors
+main contributors were the whole team but some members are 
  @Abdullrahman0
  @Ziyadalrushud
  @Hs20m
