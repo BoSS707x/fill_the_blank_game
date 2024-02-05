@@ -63,10 +63,10 @@ Fill The Blank Game is released under the [MIT License](LICENSE). See the LICENS
 For support or to report issues, please file an issue on the GitHub issue tracker.
 
 ## Authors
-#@Abdullrahman0
-#@Ziyadalrushud
-#@Hs20m
-#@BoSS707x
+# @Abdullrahman0
+# @Ziyadalrushud
+# @Hs20m
+# @BoSS707x
 
 
 
