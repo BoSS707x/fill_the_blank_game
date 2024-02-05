@@ -26,6 +26,9 @@ cd fill_the_blank_game
 
 3. Install dependencies (if any):
 
+
+
+
 npm install
 
 
