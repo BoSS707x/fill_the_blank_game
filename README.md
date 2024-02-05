@@ -72,4 +72,4 @@ main contributors were the whole team but some members are
 
 
 
-Feel free to add your name here if you contribute to the project!
+Feel free to add your name here if you contributed to the project!
