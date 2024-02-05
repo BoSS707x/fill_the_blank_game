@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'home_page.dart';
 
 class EndPage extends StatelessWidget {
@@ -21,7 +20,6 @@ class EndPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        //title: Text('Game Over'),
         backgroundColor: Colors.grey[300],
       ),
       body: Center(

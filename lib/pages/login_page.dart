@@ -24,7 +24,6 @@ class _LoginPageState extends State<LoginPage> {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Login Successful')));
 
-    // Navigate to the home page
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => HomePage()),
@@ -100,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(width: 5),  // Add a small gap
+                  SizedBox(width: 5),  
                   GestureDetector(
                     onTap: () => Navigator.push(
                       context,

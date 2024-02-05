@@ -20,7 +20,6 @@ class TimerEndedPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        //waleed  qtitle: Text('Game Over'),
         backgroundColor: Colors.grey[300],
       ),
       body: Center(

@@ -5,7 +5,6 @@ import 'package:fill_the_blank_game/pages/end_page.dart';
 import 'package:fill_the_blank_game/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'timer_ended_page.dart';
 
 class Level {
@@ -60,7 +59,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       answer: "sea",
       imagePath: "lib/images/fish.jpg",
     ),
-    //Add more levels here
   ];
 
   TextEditingController answerController = TextEditingController();
@@ -119,7 +117,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         if (currentLevel < levels.length - 1) {
           currentLevel++;
         } else {
-          // If it's the last level, navigate to EndPage
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -132,9 +129,9 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
       setState(() {
         feedback = "Incorrect, try again!";
         if (timeLeft > 10) {
-          timeLeft -= 10; // Reduce 10 seconds for wrong answer
+          timeLeft -= 10; 
         } else {
-          timeLeft = 0; // Prevent negative time
+          timeLeft = 0; 
         }
       });
     }
@@ -153,7 +150,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
               icon: Icon(Icons.settings),
               color: Colors.white,
               onPressed: () async {
-                // Navigate to SettingsPage and wait for the result
                 var result = await Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -296,7 +292,6 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           letter.toUpperCase(),
           style: TextStyle(
             fontSize: 20,
-            //fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
@@ -354,7 +349,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           child: Text(
             i < answerController.text.length
                 ? answerController.text[i].toUpperCase()
-                : '', // Show the entered letters
+                : '', 
             style: TextStyle(color: Colors.white, fontSize: 24,),
           ),
         ),

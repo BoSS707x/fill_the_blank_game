@@ -1,4 +1,6 @@
 // settings_page.dart
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:fill_the_blank_game/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,7 +43,6 @@ class SettingsPage extends StatelessWidget {
                 );
 
                 if (newTimerDuration != null) {
-                  // Update the timer duration in SharedPreferences
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   await prefs.setInt('timerDuration', newTimerDuration);
                 }
@@ -53,14 +54,12 @@ class SettingsPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => HomePage()),
                 ),
-                // Navigate back to the home page
-
             ),
+            
             ListTile(
               title: Text('Quit Game'),
               onTap: quitApp,
             ),
-            // ... other settings
           ],
         ),
       ),

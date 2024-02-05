@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, sized_box_for_whitespace
+
 import 'package:fill_the_blank_game/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,11 +13,10 @@ class HomePage extends StatelessWidget {
   }
 
   void openSettings(BuildContext context) {
-    // Navigate to the settings page
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SettingsPage()),
-      
     );
   }
 

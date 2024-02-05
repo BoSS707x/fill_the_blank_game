@@ -13,32 +13,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _passwordController = TextEditingController();
 
   void _register() async {
-    // Check if username and password are not blank
     String username = _usernameController.text.trim();
     String password = _passwordController.text.trim();
 
     if (username.isEmpty || password.isEmpty) {
-      // Show an error message if username or password is blank
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Username and password cannot be blank')),
       );
       return;
     }
 
-    // Clear all registered users
     await clearAllRegisteredUsers();
 
-    // Store username and password in SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', username);
     await prefs.setString('password', password);
 
-    // Show registration success message
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Registration Successful')),
     );
 
-    // Navigate back to login page
     Navigator.pop(context);
   }
 
@@ -104,7 +98,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 }
 
-// Function to clear all registered users in SharedPreferences
 Future<void> clearAllRegisteredUsers() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Set<String> keys = prefs.getKeys();
