@@ -42,8 +42,16 @@ npm start
 After launching the game, follow the on-screen instructions to select your game mode and difficulty level. Type your answers to fill in the blanks and submit them to see how you did.
 
 ## Contributing
+main contributors were the whole team but some members are 
+the star: @Mashhour77
+@Abdullrahman0
+@Ziyadalrushud
+@Hs20m
+@BoSS707x
 
-We welcome contributions to the Fill The Blank Game! If you have suggestions for improvements or new features, feel free to fork the repository and submit a pull request. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
+
+
+We also welcome contributions to the Fill The Blank Game! If you have suggestions for improvements or new features, feel free to fork the repository and submit a pull request. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
 
 ## License
 
