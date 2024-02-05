@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, depend_on_referenced_packages, use_key_in_widget_constructors, use_build_context_synchronously
 
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,13 +13,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _passwordController = TextEditingController();
 
   void _register() async {
+    // Check if username and password are not blank
+    String username = _usernameController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (username.isEmpty || password.isEmpty) {
+      // Show an error message if username or password is blank
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Username and password cannot be blank')),
+      );
+      return;
+    }
+
     // Clear all registered users
     await clearAllRegisteredUsers();
 
     // Store username and password in SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('username', _usernameController.text);
-    await prefs.setString('password', _passwordController.text);
+    await prefs.setString('username', username);
+    await prefs.setString('password', password);
 
     // Show registration success message
     ScaffoldMessenger.of(context).showSnackBar(
@@ -35,8 +46,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(title: Text('Registration Page'),
-      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        title: Text('Registration Page'),
+        backgroundColor: Colors.grey[300],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -97,7 +109,6 @@ Future<void> clearAllRegisteredUsers() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Set<String> keys = prefs.getKeys();
   List<String> userKeys = keys.where((key) => key.startsWith('user_')).toList();
-  
 
   for (String key in userKeys) {
     prefs.remove(key);
