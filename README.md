@@ -66,7 +66,7 @@ For support or to report issues, please file an issue on the GitHub issue tracke
 main contributors were the whole team but some members are 
  @Abdullrahman0 (https://github.com/Abdullrahman0)
  @Ziyadalrushud
- @Hs20m
+ @Hs20m ( ([https://github.com/your-github-profile](https://github.com/Hs20m)) )
  @BoSS707x
 
 
