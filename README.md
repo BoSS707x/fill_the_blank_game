@@ -1,3 +1,5 @@
+by the star: @Mashhour77
+
 # Fill The Blank Game
 
 ## Introduction
@@ -46,7 +48,7 @@ After launching the game, follow the on-screen instructions to select your game 
 
 ## Contributing
 main contributors were the whole team but some members are 
-the star: @Mashhour77
+
 @Abdullrahman0
 @Ziyadalrushud
 @Hs20m
