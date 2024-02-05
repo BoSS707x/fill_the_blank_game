@@ -49,10 +49,6 @@ After launching the game, follow the on-screen instructions to select your game 
 ## Contributing
 main contributors were the whole team but some members are 
 
-@Abdullrahman0
-@Ziyadalrushud
-@Hs20m
-@BoSS707x
 
 
 
@@ -67,7 +63,11 @@ Fill The Blank Game is released under the [MIT License](LICENSE). See the LICENS
 For support or to report issues, please file an issue on the GitHub issue tracker.
 
 ## Authors
+#@Abdullrahman0
+#@Ziyadalrushud
+#@Hs20m
+#@BoSS707x
 
-- [Your Name](https://github.com/your-github-profile)
+
 
 Feel free to add your name here if you contribute to the project!
