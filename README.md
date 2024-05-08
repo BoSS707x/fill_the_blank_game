@@ -1,5 +1,3 @@
-# by the star: @Mashhour77
-
 # Fill The Blank Game
 
 ## Introduction
