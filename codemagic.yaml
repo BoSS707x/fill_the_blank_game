@@ -9,9 +9,14 @@ workflows:
     scripts:
       - name: Install dependencies
         script: flutter pub get
-      - name: Run tests
-        script: flutter test --coverage
+      - name: Run unit tests with coverage
+        script: |
+          flutter test --coverage
+          genhtml coverage/lcov.info -o coverage/html
+      - name: Run integration tests
+        script: flutter drive --target=test/performance_test.dart
     artifacts:
+      - coverage/**
       - build/**
 
     cache:
