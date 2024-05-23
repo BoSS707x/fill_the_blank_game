@@ -1,0 +1,20 @@
+workflows:
+  test-workflow:
+    name: Test Workflow
+    instance_type: mac_mini
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Run tests
+        script: flutter test --coverage
+    artifacts:
+      - build/**
+
+    cache:
+      cache_paths:
+        - /root/.pub-cache
+        - build
