@@ -225,7 +225,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                   ),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                    backgroundColor: Colors.green,
+                    primary: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
                     ),
@@ -296,7 +296,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           ),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueGrey,
+          primary: Colors.blueGrey,
         ),
       );
     }).toList();
@@ -313,7 +313,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         },
         child: Icon(Icons.backspace),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red
+          primary: Colors.red
         ),
       ),
     );
