@@ -225,7 +225,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                   ),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                    primary: Colors.green,
+                    backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
                     ),
@@ -296,7 +296,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           ),
         ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.blueGrey,
+          backgroundColor: Colors.blueGrey,
         ),
       );
     }).toList();
@@ -313,7 +313,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         },
         child: Icon(Icons.backspace),
         style: ElevatedButton.styleFrom(
-          primary: Colors.red,
+          backgroundColor: Colors.red
         ),
       ),
     );
@@ -373,7 +373,7 @@ class FillTheBlankGame extends StatelessWidget {
     return MaterialApp(
       title: 'Fill the Blank Game',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        backgroundColor: Colors.blueGrey,
       ),
       home: FillTheBlankWidget(registeredUsername: registeredUsername),
       debugShowCheckedModeBanner: false,
