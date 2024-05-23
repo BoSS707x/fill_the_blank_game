@@ -223,15 +223,13 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                     "Submit",
                     style: TextStyle(fontSize: 25),
                   ),
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      ),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14.0),
                   ),
+                ),
                 ),
                 SizedBox(height: 2.0),
                 Text(
@@ -314,8 +312,8 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           }
         },
         child: Icon(Icons.backspace),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blueGrey,
         ),
 
       ),
