@@ -230,6 +230,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                 ),
+
                 ),
                 SizedBox(height: 2.0),
                 Text(
@@ -313,7 +314,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         },
         child: Icon(Icons.backspace),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Colors.red,
         ),
 
       ),
