@@ -12,8 +12,7 @@ class Level {
   String answer;
   String imagePath;
 
-  Level(
-      {required this.question, required this.answer, required this.imagePath});
+  Level({required this.question, required this.answer, required this.imagePath});
 }
 
 class FillTheBlankWidget extends StatefulWidget {
@@ -78,7 +77,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => TimerEndedPage(score: score, timeLeft: 0, username: currentUsername,),
+              builder: (context) => TimerEndedPage(score: score, timeLeft: 0, username: currentUsername),
             ),
           );
         }
@@ -120,7 +119,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => EndPage(score: score, timeLeft: timeLeft, username: currentUsername,),
+              builder: (context) => EndPage(score: score, timeLeft: timeLeft, username: currentUsername),
             ),
           );
         }
@@ -225,7 +224,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
                   ),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                    primary: Colors.green,
+                    backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
                     ),
@@ -295,8 +294,8 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
             color: Colors.white,
           ),
         ),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.blueGrey,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blueGrey),
         ),
       );
     }).toList();
@@ -313,7 +312,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
         },
         child: Icon(Icons.backspace),
         style: ElevatedButton.styleFrom(
-          primary: Colors.red,
+          backgroundColor: Colors.blueGrey,
         ),
       ),
     );
@@ -349,7 +348,7 @@ class _FillTheBlankWidgetState extends State<FillTheBlankWidget> {
           child: Text(
             i < answerController.text.length
                 ? answerController.text[i].toUpperCase()
-                : '', 
+                : '',
             style: TextStyle(color: Colors.white, fontSize: 24,),
           ),
         ),
