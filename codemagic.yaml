@@ -1,6 +1,6 @@
 workflows:
-  build-and-publish:
-    name: Build and Publish Workflow
+  build-and-test:
+    name: Build and Test Workflow
     instance_type: mac_mini
     max_build_duration: 60
     environment:
@@ -30,12 +30,6 @@ workflows:
       - build/app/outputs/flutter-apk/app-release.apk
       - build/app/outputs/bundle/release/app-release.aab
       - build/reports/test-coverage/**
-    publishing:
-      google_play:
-        credentials: $GOOGLE_PLAY_JSON_KEY
-        track: alpha
-        apk_path: build/app/outputs/flutter-apk/app-release.apk
-        bundle_path: build/app/outputs/bundle/release/app-release.aab
     cache:
       cache_paths:
         - /root/.pub-cache
