@@ -1,6 +1,6 @@
 workflows:
-  test-workflow:
-    name: Test Workflow
+  build-and-publish:
+    name: Build and Publish Workflow
     instance_type: mac_mini
     max_build_duration: 60
     environment:
@@ -9,16 +9,41 @@ workflows:
     scripts:
       - name: Install dependencies
         script: flutter pub get
-      - name: Run unit tests with coverage
+      - name: Set up key.properties
+        script: |
+          echo "storePassword=$STORE_PASSWORD" > android/key.properties
+          echo "keyPassword=$KEY_PASSWORD" >> android/key.properties
+          echo "keyAlias=$KEY_ALIAS" >> android/key.properties
+          echo "storeFile=$STORE_FILE" >> android/key.properties
+      - name: Run tests with coverage
         script: |
           flutter test --coverage
           genhtml coverage/lcov.info -o coverage/html
-      - name: Run integration tests
-        script: flutter drive --target=test/performance_test.dart
+          mkdir -p build/reports
+          mv coverage/html build/reports/test-coverage
+      - name: Build Android APK
+        script: flutter build apk --release
+      - name: Build Android App Bundle
+        script: flutter build appbundle --release
+      - name: Build iOS
+        script: flutter build ios --release --no-codesign
     artifacts:
-      - coverage/**
-      - build/**
-
+      - build/app/outputs/flutter-apk/app-release.apk
+      - build/app/outputs/bundle/release/app-release.aab
+      - build/ios/ipa/*.ipa
+      - build/reports/test-coverage/**
+    publishing:
+      app_store_connect:
+        apple_id: $APPLE_ID
+        app_specific_password: $APP_SPECIFIC_PASSWORD
+        api_key: $APP_STORE_API_KEY
+        api_issuer: $APP_STORE_API_ISSUER
+        ipa_path: build/ios/ipa/*.ipa
+      google_play:
+        credentials: $GOOGLE_PLAY_JSON_KEY
+        track: alpha
+        apk_path: build/app/outputs/flutter-apk/app-release.apk
+        bundle_path: build/app/outputs/bundle/release/app-release.aab
     cache:
       cache_paths:
         - /root/.pub-cache
