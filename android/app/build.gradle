@@ -4,10 +4,14 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+import java.io.FileNotFoundException
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.newDataInputStream())
+} else {
+    throw new FileNotFoundException("local.properties file not found")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode') ?: '1'
@@ -17,11 +21,25 @@ def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    throw new FileNotFoundException("key.properties file not found")
 }
+
+// Debugging logs
+println "flutter.compileSdkVersion: ${localProperties.getProperty('flutter.compileSdkVersion')}"
+println "flutter.minSdkVersion: ${localProperties.getProperty('flutter.minSdkVersion')}"
+println "flutter.targetSdkVersion: ${localProperties.getProperty('flutter.targetSdkVersion')}"
+println "flutter.versionCode: ${localProperties.getProperty('flutter.versionCode')}"
+println "flutter.versionName: ${localProperties.getProperty('flutter.versionName')}"
+println "flutter.ndkVersion: ${localProperties.getProperty('flutter.ndkVersion')}"
+println "keyAlias: ${keystoreProperties['keyAlias']}"
+println "keyPassword: ${keystoreProperties['keyPassword']}"
+println "storeFile: ${keystoreProperties['storeFile']}"
+println "storePassword: ${keystoreProperties['storePassword']}"
 
 android {
     namespace "com.example.fill_the_blank_game"
-    compileSdkVersion localProperties.getProperty('flutter.compileSdkVersion').toInteger()
+    compileSdkVersion localProperties.getProperty('flutter.compileSdkVersion')?.toInteger() ?: 33
     ndkVersion localProperties.getProperty('flutter.ndkVersion')
 
     compileOptions {
@@ -39,8 +57,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.fill_the_blank_game"
-        minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
-        targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+        minSdkVersion localProperties.getProperty('flutter.minSdkVersion')?.toInteger() ?: 21
+        targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion')?.toInteger() ?: 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
